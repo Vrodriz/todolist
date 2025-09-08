@@ -17,7 +17,6 @@ const buildApp = async (): Promise<FastifyInstance> => {
     credentials: true,
   });
 
-  // Register Swagger for API documentation
   await app.register(import('@fastify/swagger'), {
     swagger: {
       info: {
