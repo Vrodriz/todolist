@@ -61,7 +61,7 @@ git clone <repository-url>
 cd todo-list
 ```
 
-### 2. Executar com Docker (Recomendado)
+### 2. Executar com Docker (Recomendado e lembre-se de ter o Docker executando no momento)
 
 ```bash
 # Iniciar todos os serviços
