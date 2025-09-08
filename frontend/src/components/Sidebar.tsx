@@ -103,13 +103,6 @@ export function Sidebar({
 
       <Separator />
 
-      <div className="px-4 py-4">
-        <Button className="w-full justify-start gap-2" size="sm">
-          <Plus className="h-4 w-4" />
-          Nova Tarefa
-        </Button>
-      </div>
-
       <Separator />
 
       <nav className="flex-1 px-4 py-4">
