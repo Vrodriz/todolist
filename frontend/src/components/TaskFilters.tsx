@@ -15,20 +15,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 interface TaskFiltersProps {
-  /** Current filter settings */
   filters: FilterType;
-  /** Handler for filter changes */
   onFiltersChange: (filters: FilterType) => void;
-  /** Total number of tasks */
   totalTasks: number;
-  /** Number of completed tasks */
   completedTasks: number;
 }
 
-/**
- * Modern task filters component with search, status filters, and sorting
- * Features pill-based status filters and dropdown sorting options
- */
 export const TaskFilters: React.FC<TaskFiltersProps> = ({
   filters,
   onFiltersChange,
@@ -39,7 +31,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
     onFiltersChange({
       ...filters,
       search: value || undefined,
-      page: 1, // Reset to first page when searching
+      page: 1,
     });
   };
 
@@ -63,26 +55,25 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
   const pendingTasks = totalTasks - completedTasks;
 
   const sortOptions = [
-    { label: 'Newest First', value: 'createdAt-desc' },
-    { label: 'Oldest First', value: 'createdAt-asc' },
-    { label: 'Title A-Z', value: 'title-asc' },
-    { label: 'Title Z-A', value: 'title-desc' },
-    { label: 'Due Date (Soon)', value: 'dueDate-asc' },
-    { label: 'Due Date (Later)', value: 'dueDate-desc' },
-    { label: 'Recently Updated', value: 'updatedAt-desc' },
+    { label: 'Mais recentes', value: 'createdAt-desc' },
+    { label: 'Mais antigas', value: 'createdAt-asc' },
+    { label: 'Título A-Z', value: 'title-asc' },
+    { label: 'Título Z-A', value: 'title-desc' },
+    { label: 'Prazo (mais próximo)', value: 'dueDate-asc' },
+    { label: 'Prazo (mais distante)', value: 'dueDate-desc' },
+    { label: 'Atualizadas recentemente', value: 'updatedAt-desc' },
   ];
 
   const currentSort = sortOptions.find(
     option => option.value === `${filters.sortBy}-${filters.sortOrder}`
-  )?.label || 'Newest First';
+  )?.label || 'Mais recentes';
 
   return (
     <div className="space-y-4">
-      {/* Search Bar */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
-          placeholder="Search tasks..."
+          placeholder="Buscar tarefas..."
           value={filters.search || ''}
           onChange={(e) => handleSearchChange(e.target.value)}
           className="pl-9"
@@ -90,7 +81,6 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
         />
       </div>
 
-      {/* Status Filters and Sort */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2">
           <Button
@@ -99,7 +89,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
             onClick={() => handleStatusFilter(undefined)}
             data-testid="filter-all-tasks"
           >
-            All Tasks ({totalTasks})
+            Todas ({totalTasks})
           </Button>
           
           <Button
@@ -108,7 +98,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
             onClick={() => handleStatusFilter(false)}
             data-testid="filter-pending-tasks"
           >
-            Pending ({pendingTasks})
+            Pendentes ({pendingTasks})
           </Button>
           
           <Button
@@ -117,11 +107,10 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
             onClick={() => handleStatusFilter(true)}
             data-testid="filter-completed-tasks"
           >
-            Completed ({completedTasks})
+            Concluídas ({completedTasks})
           </Button>
         </div>
 
-        {/* Sort Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="gap-2">
@@ -130,7 +119,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+            <DropdownMenuLabel>Ordenar por</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {sortOptions.map((option) => {
               const [sortBy, sortOrder] = option.value.split('-');
@@ -150,14 +139,13 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
         </DropdownMenu>
       </div>
 
-      {/* Active Filters Summary */}
       {(filters.search || filters.completed !== undefined) && (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm text-muted-foreground">Active filters:</span>
+          <span className="text-sm text-muted-foreground">Filtros ativos:</span>
           
           {filters.search && (
             <Badge variant="secondary" className="gap-1">
-              Search: "{filters.search}"
+              Busca: "{filters.search}"
               <Button
                 variant="ghost"
                 size="icon"
@@ -171,7 +159,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
           
           {filters.completed !== undefined && (
             <Badge variant="secondary" className="gap-1">
-              Status: {filters.completed ? 'Completed' : 'Pending'}
+              Status: {filters.completed ? 'Concluídas' : 'Pendentes'}
               <Button
                 variant="ghost"
                 size="icon"
@@ -190,7 +178,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
             className="h-6 px-2 text-xs"
             data-testid="clear-filters-button"
           >
-            Clear all
+            Limpar tudo
           </Button>
         </div>
       )}
