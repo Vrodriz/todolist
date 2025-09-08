@@ -13,11 +13,9 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { 
   Search,
   Filter,
-  Settings,
   Moon,
   Sun,
   Monitor,
-  MoreHorizontal
 } from 'lucide-react';
 
 interface HeaderProps {
